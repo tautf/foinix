@@ -1,6 +1,7 @@
 "use server";
 
 import prisma from "@/app/shared/prisma";
+import cache from "@/app/shared/cache";
 import { Product } from "@prisma/client";
 
 /**
@@ -8,8 +9,19 @@ import { Product } from "@prisma/client";
  * @returns All products in the database
  */
 export async function getProducts(): Promise<Product[]> {
-  const products = await prisma.product.findMany();
-  return products;
+  const start = performance.now();
+  if (cache.has("products")) {
+    const end = performance.now();
+    const cached = cache.get<Product[]>("products")!;
+    console.log(`Retrieved products from cache in ${end - start}ms`);
+    return cached;
+  } else {
+    const products = await prisma.product.findMany();
+    cache.set<Product[]>("products", products);
+    const end = performance.now();
+    console.log(`Retrieved products from database in ${end - start}ms`);
+    return products;
+  }
 }
 
 /**
@@ -18,8 +30,13 @@ export async function getProducts(): Promise<Product[]> {
  * @returns Product with the given id
  */
 export async function getProductById(id: number): Promise<Product> {
-  const product = await prisma.product.findUnique({ where: { id } });
-  return product!;
+  if (cache.has(`product-${id}`)) {
+    return cache.get<Product>(`product-${id}`)!;
+  } else {
+    const product = await prisma.product.findUnique({ where: { id } });
+    cache.set(`product-${id}`, product);
+    return product!;
+  }
 }
 
 /**
@@ -28,9 +45,10 @@ export async function getProductById(id: number): Promise<Product> {
  * @returns Id of the newly created product
  */
 export async function addProduct(productToAdd: Product): Promise<number> {
-  const newProductId = await prisma.product.create({
+  const newProduct = await prisma.product.create({
     data: productToAdd,
     select: { id: true },
   });
-  return newProductId.id;
+  cache.set(`product-${newProduct.id}`, newProduct);
+  return newProduct.id;
 }
