@@ -8,10 +8,33 @@ generator client {
 }
 
 model Product {
-    id          Int      @id @default(autoincrement())
-    name        String
-    description String?
-    price       Float
-    createdAt   DateTime @default(now())
-    updatedAt   DateTime @updatedAt
+  id            Int         @id @default(autoincrement())
+  name          String
+  description   String?
+  price         Float
+  createdAt     DateTime    @default(now())
+  updatedAt     DateTime    @updatedAt
+  productType   ProductType @relation(fields: [productTypeId], references: [id])
+  productTypeId Int
+  Supplier      Supplier?   @relation(fields: [supplierId], references: [id])
+  supplierId    Int?
 }
+
+model ProductType {
+  id          Int       @id @default(autoincrement())
+  name        String
+  description String?
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+  Product     Product[]
+}
+
+model Supplier {
+  id          Int       @id @default(autoincrement())
+  name        String
+  description String?
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+  Products    Product[]
+}
+
