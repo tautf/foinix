@@ -8,18 +8,13 @@ import { Product } from "@prisma/client";
  * Retrieves all products from the database
  * @returns All products in the database
  */
-export async function getProducts(): Promise<Product[]> {
-  const start = performance.now();
-  if (cache.has("products")) {
-    const end = performance.now();
+export async function getProducts(forceUpdate = false): Promise<Product[]> {
+  if (cache.has("products") && !forceUpdate) {
     const cached = cache.get<Product[]>("products")!;
-    console.log(`Retrieved products from cache in ${end - start}ms`);
     return cached;
   } else {
     const products = await prisma.product.findMany();
-    cache.set<Product[]>("products", products);
-    const end = performance.now();
-    console.log(`Retrieved products from database in ${end - start}ms`);
+    cache.set<Product[]>("products", products, 86400);
     return products;
   }
 }
@@ -34,7 +29,7 @@ export async function getProductById(id: number): Promise<Product> {
     return cache.get<Product>(`product-${id}`)!;
   } else {
     const product = await prisma.product.findUnique({ where: { id } });
-    cache.set(`product-${id}`, product);
+    cache.set(`product-${id}`, product, 86400);
     return product!;
   }
 }
@@ -49,6 +44,7 @@ export async function addProduct(productToAdd: Product): Promise<number> {
     data: productToAdd,
     select: { id: true },
   });
-  cache.set(`product-${newProduct.id}`, newProduct);
+  cache.set(`product-${newProduct.id}`, newProduct, 86400);
+  await getProducts(true);
   return newProduct.id;
 }

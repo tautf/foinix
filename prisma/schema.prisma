@@ -12,12 +12,11 @@ model Product {
   name          String
   description   String?
   price         Float
+  renewalDate   DateTime
   createdAt     DateTime    @default(now())
   updatedAt     DateTime    @updatedAt
   productType   ProductType @relation(fields: [productTypeId], references: [id])
   productTypeId Int
-  Supplier      Supplier?   @relation(fields: [supplierId], references: [id])
-  supplierId    Int?
 }
 
 model ProductType {
@@ -26,6 +25,7 @@ model ProductType {
   description String?
   createdAt   DateTime  @default(now())
   updatedAt   DateTime  @updatedAt
+  icon        String?
   Product     Product[]
 }
 
@@ -35,6 +35,4 @@ model Supplier {
   description String?
   createdAt   DateTime  @default(now())
   updatedAt   DateTime  @updatedAt
-  Products    Product[]
 }
-
