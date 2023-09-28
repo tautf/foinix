@@ -2,7 +2,7 @@
 
 import prisma from "@/app/shared/prisma";
 import cache from "@/app/shared/cache";
-import { Product } from "@prisma/client";
+import type { Product, ProductType } from "@prisma/client";
 
 /**
  * Retrieves all products from the database
@@ -13,10 +13,26 @@ export async function getProducts(forceUpdate = false): Promise<Product[]> {
     const cached = cache.get<Product[]>("products")!;
     return cached;
   } else {
-    const products = await prisma.product.findMany();
+    const products = await prisma.product.findMany({
+      orderBy: { renewalDate: "asc" },
+    });
     cache.set<Product[]>("products", products, 86400);
     return products;
   }
+}
+
+export async function getProductsByTypesFilter(
+  types: ProductType[]
+): Promise<Product[]> {
+  const products = await prisma.product.findMany({
+    where: {
+      productTypeId: {
+        in: types.map((productType) => productType.id),
+      },
+    },
+  });
+
+  return products;
 }
 
 /**
@@ -42,7 +58,6 @@ export async function getProductById(id: number): Promise<Product> {
 export async function addProduct(productToAdd: Product): Promise<number> {
   const newProduct = await prisma.product.create({
     data: productToAdd,
-    select: { id: true },
   });
   cache.set(`product-${newProduct.id}`, newProduct, 86400);
   await getProducts(true);
