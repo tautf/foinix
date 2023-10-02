@@ -2,7 +2,7 @@
 
 import React, { useState } from "react";
 import { useRouter } from "next/navigation";
-import { z } from "zod";
+import { ZodError, z } from "zod";
 import type { ProductType } from "@prisma/client";
 
 import { Button } from "@nextui-org/button";
@@ -38,39 +38,38 @@ export default function AddProduct({ productTypes }: Props) {
   const router = useRouter();
 
   const addProductFunc = async (formData: FormData) => {
-    const productName = z
-      .string()
-      .min(5)
-      .parse(formData.get("product-name") as string);
-    const description = z
-      .string()
-      .nullable()
-      .parse(formData.get("product-description") as string);
-    const price = z
-      .number()
-      .min(1)
-      .parse(Number(formData.get("product-price") as string));
-    console.log(formData.get("product-renewal-date") as string);
-    const renewalDate = z
-      .string()
-      .parse(formData.get("product-renewal-date") as string);
-
-    const productTypeId = z
-      .number()
-      .int()
-      .parse(Number(formData.get("product-type") as string));
-
-    const id = await addProduct({
-      name: productName,
-      description,
-      price,
-      renewalDate: new Date(renewalDate),
-      productTypeId,
+    const productSchema = z.object({
+      productName: z
+        .string()
+        .min(5, { message: "Product name must be at least 5 characters long" }),
+      description: z.string().nullable(),
+      price: z.number().min(1, { message: "Price must be greater than 0" }),
+      renewalDate: z.string(),
+      productTypeId: z
+        .number()
+        .int({ message: "Please select a product type" }),
     });
-    if (id) {
-      router.push(`/products/${id}`);
-    } else {
-      alert("Something went wrong");
+
+    try {
+      const product = productSchema.parse({
+        productName: formData.get("product-name") as string,
+        description: formData.get("product-description") as string,
+        price: Number(formData.get("product-price") as string),
+        renewalDate: formData.get("product-renewal-date") as string,
+        productTypeId: Number(formData.get("product-type") as string),
+      });
+
+      const id = await addProduct(product);
+      if (id) {
+        router.push(`/products/${id}`);
+      } else {
+        alert("Something went wrong");
+      }
+    } catch (err: any) {
+      console.log(err);
+      for (const error of err.errors) {
+        alert(error.message);
+      }
     }
   };
 
@@ -83,7 +82,7 @@ export default function AddProduct({ productTypes }: Props) {
     <>
       <Button
         onClick={toggleShowModel}
-        className="bg-gradient-to-r from-indigo-400 to-indigo-500 text-black px-12 transition ease-in hover:scale-110"
+        className="bg-gradient-to-r from-indigo-400 to-indigo-700 text-black px-12 transition ease-in hover:scale-110"
         variant="shadow"
         startContent={<PlusCircleIcon className="h-5 w-5" />}
       >
@@ -128,6 +127,7 @@ export default function AddProduct({ productTypes }: Props) {
                 />
                 <Input
                   isRequired
+                  min={1}
                   className="w-1/2 h-auto"
                   type="date"
                   defaultValue={formattedDate()}
@@ -136,6 +136,7 @@ export default function AddProduct({ productTypes }: Props) {
                 />
               </div>
               <Select
+                isRequired
                 name="product-type"
                 label="Select produdct type"
                 className="w-1/2"

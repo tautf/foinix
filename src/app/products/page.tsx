@@ -35,7 +35,7 @@ export default async function Products({
   return (
     <div className=" mx-80 my-40">
       <div className="flex justify-between mb-20">
-        <h1 className="text-4xl text-indigo-500 font-bold">Products</h1>
+        <h1 className="text-4xl text-indigo-700 font-bold">Products</h1>
         <AddProduct productTypes={productTypes}></AddProduct>
       </div>
 

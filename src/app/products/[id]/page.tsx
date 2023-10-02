@@ -19,7 +19,7 @@ export default async function Product(params: { params: { id: string } }) {
     <div className="md:container mx-auto py-40">
       <Link href="/">
         <Button
-          className="bg-indigo-500 text-black float-right px-12 py-2 my-10"
+          className="bg-indigo-700 text-black float-right px-12 py-2 my-10"
           startContent={<HomeIcon className="w-5 h-5" />}
         >
           Back home

@@ -1,0 +1,13 @@
+.alerts_border {
+  border: 2px #f87171 solid;
+
+  animation: blink-border 1s;
+  animation-iteration-count: infinite;
+}
+
+@keyframes blink-border {
+  50% {
+    border-color: #dc2626;
+    transform: scale(1.005);
+  }
+}

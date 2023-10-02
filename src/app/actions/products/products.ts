@@ -55,11 +55,70 @@ export async function getProductById(id: number): Promise<Product> {
  * @param productToAdd Product to create in the database
  * @returns Id of the newly created product
  */
-export async function addProduct(productToAdd: Product): Promise<number> {
+export async function addProduct(productToAdd: any): Promise<number> {
   const newProduct = await prisma.product.create({
     data: productToAdd,
   });
   cache.set(`product-${newProduct.id}`, newProduct, 86400);
   await getProducts(true);
   return newProduct.id;
+}
+
+export async function getToReplaceTop5(): Promise<Product[]> {
+  const products = await prisma.product.findMany({
+    orderBy: { renewalDate: "asc" },
+    take: 5,
+  });
+
+  return products;
+}
+
+export async function getRenewalDateDueProducts(): Promise<number> {
+  const products = await prisma.product.findMany({
+    where: {
+      renewalDate: {
+        lte: new Date(),
+      },
+    },
+  });
+
+  return products.length;
+}
+
+export async function getToReplaceAndInvestIn30Days(): Promise<{
+  products30: Product[];
+  sum30: number;
+}> {
+  const products = await prisma.product.findMany({
+    where: {
+      renewalDate: {
+        gte: new Date(),
+        lte: new Date(new Date().getTime() + 30 * 24 * 60 * 60 * 1000),
+      },
+    },
+  });
+
+  return {
+    products30: products,
+    sum30: products.reduce((acc, product) => acc + product.price, 0),
+  };
+}
+
+export async function getToReplaceAndInvestIn90Days(): Promise<{
+  products90: Product[];
+  sum90: number;
+}> {
+  const products = await prisma.product.findMany({
+    where: {
+      renewalDate: {
+        gte: new Date(new Date().getTime() + 30 * 24 * 60 * 60 * 1000),
+        lte: new Date(new Date().getTime() + 90 * 24 * 60 * 60 * 1000),
+      },
+    },
+  });
+
+  return {
+    products90: products,
+    sum90: products.reduce((acc, product) => acc + product.price, 0),
+  };
 }
