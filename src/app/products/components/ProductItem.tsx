@@ -5,7 +5,8 @@ import { Product } from "@prisma/client";
 import { Card, CardHeader } from "@nextui-org/card";
 import { ServerIcon } from "@heroicons/react/24/outline";
 
-import styles from "../../shared.module.css";
+import sharedStyles from "../../shared.module.css";
+import styles from "./ProductItem.module.css";
 
 export default function ProductItem({ product }: { product: Product }) {
   const getTTL = (date: Date) => {
@@ -18,12 +19,15 @@ export default function ProductItem({ product }: { product: Product }) {
   return (
     <Link href={`/products/${product.id}`}>
       <Card
-        className={`w-full my-3 cursor-pointer bg-gradient-to-r hover:from-indigo-400 hover:to-indigo-500 transition ease-in hover:scale-105 ${
-          (getTTL(product.renewalDate) < 0 && `${styles.alerts_border}`) ||
+        className={`w-full my-3 cursor-pointer bg-gradient-to-r hover:from-indigo-900 hover:to-indigo-950 transition ease-in ${
+          styles.item
+        } ${
+          (getTTL(product.renewalDate) < 0 &&
+            `${sharedStyles.alerts_border}`) ||
           (getTTL(product.renewalDate) < 30 &&
-            "border-2 border-red-400 border-opacity-50") ||
+            "border-2 border-red-500 border-opacity-50") ||
           (getTTL(product.renewalDate) < 90 &&
-            "border-2 border-amber-400 border-opacity-50")
+            "border-2 border-amber-500 border-opacity-50")
         }`}
       >
         <div className="flex justify-between">
@@ -32,9 +36,9 @@ export default function ProductItem({ product }: { product: Product }) {
             {product.name}
             <p
               className={`absolute top-3 right-4 ${
-                (getTTL(product.renewalDate) < 0 && "font-bold text-red-400") ||
-                (getTTL(product.renewalDate) < 30 && "text-red-400") ||
-                (getTTL(product.renewalDate) < 90 && "text-amber-400")
+                (getTTL(product.renewalDate) < 0 && "font-bold text-red-500") ||
+                (getTTL(product.renewalDate) < 30 && "text-red-500") ||
+                (getTTL(product.renewalDate) < 90 && "text-amber-500")
               }`}
             >
               TTL: {getTTL(product.renewalDate)}

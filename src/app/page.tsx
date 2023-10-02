@@ -31,8 +31,8 @@ export default async function Home() {
       subHeader: "Due to renew",
       bgColor:
         toRenew === 0
-          ? "bg-gradient-to-r from-indigo-400 to-indigo-500"
-          : "bg-gradient-to-r from-red-300 to-red-400",
+          ? "bg-gradient-to-r from-indigo-500 to-indigo-600"
+          : "bg-gradient-to-r from-red-500 to-red-600",
       text: String(toRenew),
     },
     {
@@ -40,10 +40,10 @@ export default async function Home() {
       subHeader: "To replace in the next 30 days",
       bgColor:
         products30.length < 5
-          ? "bg-gradient-to-r from-indigo-400 to-indigo-500"
+          ? "bg-gradient-to-r from-indigo-500 to-indigo-600"
           : products30.length <= 3
-          ? "bg-gradient-to-r from-amber-300 to-amber-400"
-          : "bg-gradient-to-r from-red-300 to-red-400",
+          ? "bg-gradient-to-r from-amber-500 to-amber-600"
+          : "bg-gradient-to-r from-red-500 to-red-600",
       text: String(products30.length),
     },
     {
@@ -51,10 +51,10 @@ export default async function Home() {
       subHeader: "To invest in the next 30 days",
       bgColor:
         sum30 < 5000
-          ? "bg-gradient-to-r from-indigo-400 to-indigo-500"
+          ? "bg-gradient-to-r from-indigo-500 to-indigo-600"
           : sum30 < 10000
-          ? "bg-gradient-to-r from-amber-300 to-amber-400"
-          : "bg-gradient-to-r from-red-300 to-red-400",
+          ? "bg-gradient-to-r from-amber-500 to-amber-600"
+          : "bg-gradient-to-r from-red-500 to-red-600",
       text: `${sum30}€`,
     },
     {
@@ -62,10 +62,10 @@ export default async function Home() {
       subHeader: "To replace in the next 90 days",
       bgColor:
         products90.length < 15
-          ? "bg-gradient-to-r from-indigo-400 to-indigo-500"
+          ? "bg-gradient-to-r from-indigo-500 to-indigo-600"
           : products90.length <= 12
-          ? "bg-gradient-to-r from-amber-300 to-amber-400"
-          : "bg-gradient-to-r from-red-300 to-red-400",
+          ? "bg-gradient-to-r from-amber-500 to-amber-600"
+          : "bg-gradient-to-r from-red-500 to-red-600",
       text: String(products90.length),
     },
     {
@@ -73,10 +73,10 @@ export default async function Home() {
       subHeader: "To invest in the next 90 days",
       bgColor:
         sum30 < 15000
-          ? "bg-gradient-to-r from-indigo-400 to-indigo-500"
+          ? "bg-gradient-to-r from-indigo-500 to-indigo-600"
           : sum30 < 30000
-          ? "bg-gradient-to-r from-amber-300 to-amber-400"
-          : "bg-gradient-to-r from-red-300 to-red-400",
+          ? "bg-gradient-to-r from-amber-500 to-amber-600"
+          : "bg-gradient-to-r from-red-500 to-red-600",
       text: `${sum90}€`,
     },
   ];
