@@ -39,12 +39,12 @@ export default function AddProduct({ productTypes }: Props) {
 
   const addProductFunc = async (formData: FormData) => {
     const productSchema = z.object({
-      productName: z
+      name: z
         .string()
         .min(5, { message: "Product name must be at least 5 characters long" }),
       description: z.string().nullable(),
       price: z.number().min(1, { message: "Price must be greater than 0" }),
-      renewalDate: z.string(),
+      renewalDate: z.date(),
       productTypeId: z
         .number()
         .int({ message: "Please select a product type" }),
@@ -52,10 +52,10 @@ export default function AddProduct({ productTypes }: Props) {
 
     try {
       const product = productSchema.parse({
-        productName: formData.get("product-name") as string,
+        name: formData.get("product-name") as string,
         description: formData.get("product-description") as string,
         price: Number(formData.get("product-price") as string),
-        renewalDate: formData.get("product-renewal-date") as string,
+        renewalDate: new Date(formData.get("product-renewal-date") as string),
         productTypeId: Number(formData.get("product-type") as string),
       });
 

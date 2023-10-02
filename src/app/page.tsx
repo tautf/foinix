@@ -28,10 +28,12 @@ export default async function Home() {
   const cards: ICard[] = [
     {
       header: "DUE",
-      subHeader: "Due to renew",
+      subHeader: "Due to replace",
       bgColor:
         toRenew === 0
           ? "bg-gradient-to-r from-indigo-500 to-indigo-600"
+          : toRenew > 2
+          ? `bg-gradient-to-r from-red-700 to-red-800 ${styles.alerts_bg}`
           : "bg-gradient-to-r from-red-500 to-red-600",
       text: String(toRenew),
     },
@@ -59,7 +61,7 @@ export default async function Home() {
     },
     {
       header: "TR90",
-      subHeader: "To replace in the next 90 days",
+      subHeader: "To replace in the next 90 days (inc.  TR30)",
       bgColor:
         products90.length < 15
           ? "bg-gradient-to-r from-indigo-500 to-indigo-600"
@@ -70,7 +72,7 @@ export default async function Home() {
     },
     {
       header: "TI90",
-      subHeader: "To invest in the next 90 days",
+      subHeader: "To invest in the next 90 days (inc. TI30)",
       bgColor:
         sum30 < 15000
           ? "bg-gradient-to-r from-indigo-500 to-indigo-600"
@@ -94,14 +96,14 @@ export default async function Home() {
         </div>
 
         <br />
-        <h2 className="-ml-3">Quick view</h2>
         <div className={`flex justify-between flex-cols-${cards.length}`}>
           {cards.map((card) => (
             <DashboardCard key={card.header} card={card} />
           ))}
         </div>
+        <hr className="opacity-20"></hr>
         <div className="m-5">
-          <h2 className="-ml-3">Upcoming 5 products</h2>
+          <h2>NEXT5TR</h2>
           {toReplaceTop5.map((product: Product) => (
             <ProductItem key={product.id} product={product} />
           ))}

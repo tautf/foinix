@@ -11,3 +11,16 @@
     transform: scale(1.005);
   }
 }
+
+.alerts_bg {
+  background-color: #dc2626;
+
+  animation: blink-bg 1s;
+  animation-iteration-count: infinite;
+}
+
+@keyframes blink-bg {
+  50% {
+    transform: scale(1.05);
+  }
+}

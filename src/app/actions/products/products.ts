@@ -64,6 +64,10 @@ export async function addProduct(productToAdd: any): Promise<number> {
   return newProduct.id;
 }
 
+/**
+ * Retrieves the top 5 products that need to be replaced
+ * @returns top 5 products that need to be replaced
+ */
 export async function getToReplaceTop5(): Promise<Product[]> {
   const products = await prisma.product.findMany({
     orderBy: { renewalDate: "asc" },
@@ -73,6 +77,10 @@ export async function getToReplaceTop5(): Promise<Product[]> {
   return products;
 }
 
+/**
+ * Retrieves all products that need to be replaced
+ * @returns Amount of products that need to be replaced
+ */
 export async function getRenewalDateDueProducts(): Promise<number> {
   const products = await prisma.product.findMany({
     where: {
@@ -85,6 +93,10 @@ export async function getRenewalDateDueProducts(): Promise<number> {
   return products.length;
 }
 
+/**
+ * Retrieves all products that need to be replaced in the next 30 days
+ * @returns All products that need to be replaced in the next 30 days
+ */
 export async function getToReplaceAndInvestIn30Days(): Promise<{
   products30: Product[];
   sum30: number;
@@ -104,6 +116,10 @@ export async function getToReplaceAndInvestIn30Days(): Promise<{
   };
 }
 
+/**
+ * Retrieves all products that need to be replaced in the next 90 days
+ * @returns All products that need to be replaced in the next 90 days
+ */
 export async function getToReplaceAndInvestIn90Days(): Promise<{
   products90: Product[];
   sum90: number;
@@ -111,7 +127,7 @@ export async function getToReplaceAndInvestIn90Days(): Promise<{
   const products = await prisma.product.findMany({
     where: {
       renewalDate: {
-        gte: new Date(new Date().getTime() + 30 * 24 * 60 * 60 * 1000),
+        gte: new Date(),
         lte: new Date(new Date().getTime() + 90 * 24 * 60 * 60 * 1000),
       },
     },
