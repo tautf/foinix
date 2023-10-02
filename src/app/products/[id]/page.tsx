@@ -16,7 +16,7 @@ import { getProductById } from "@/app/actions/products/products";
 export default async function Product(params: { params: { id: string } }) {
   const product = await getProductById(Number(params.params["id"]));
   return (
-    <div className="md:container mx-auto py-40">
+    <div className="md:container mx-auto px-40 py-40">
       <Link href="/">
         <Button
           className="bg-indigo-700 text-black float-right px-12 py-2 my-10"

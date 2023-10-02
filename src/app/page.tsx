@@ -83,7 +83,7 @@ export default async function Home() {
 
   return (
     <>
-      <div className="mx-80 my-20">
+      <div className="mx-96 px-20 my-40">
         <div className="flex justify-between">
           <p className="-ml-5 text-6xl font-extrabold text-indigo-700">
             Dashboard
