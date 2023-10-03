@@ -33,7 +33,7 @@ export default async function Products({
   }
 
   return (
-    <div className="mx-80 p-20 my-40">
+    <div className="mx-auto m-10 mt-20 max-w-screen-lg">
       <div className="flex justify-between mb-20">
         <h1 className="text-4xl text-indigo-700 font-bold">Products</h1>
         <AddProduct productTypes={productTypes}></AddProduct>

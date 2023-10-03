@@ -84,31 +84,29 @@ export default async function Home() {
   ];
 
   return (
-    <>
-      <div className="mx-96 px-20 my-40">
-        <div className="flex justify-between">
-          <p className="-ml-5 text-6xl font-extrabold text-indigo-700">
-            Dashboard
-          </p>
-          <Link href="/products">
-            <Button className="px-10 mt-2">Products</Button>
-          </Link>
-        </div>
-
-        <br />
-        <div className={`flex justify-between flex-cols-${cards.length}`}>
-          {cards.map((card) => (
-            <DashboardCard key={card.header} card={card} />
-          ))}
-        </div>
-        <hr className="opacity-20"></hr>
-        <div className="m-5">
-          <h2>NEXT5TR</h2>
-          {toReplaceTop5.map((product: Product) => (
-            <ProductItem key={product.id} product={product} />
-          ))}
-        </div>
+    <div className="mx-auto m-10 max-w-screen-lg">
+      <div className="flex justify-between">
+        <p className="-ml-5 text-6xl font-extrabold text-indigo-700">
+          Dashboard
+        </p>
+        <Link href="/products">
+          <Button className="px-10 mt-2">Products</Button>
+        </Link>
       </div>
-    </>
+
+      <br />
+      <div className={`flex justify-between flex-cols-${cards.length}`}>
+        {cards.map((card) => (
+          <DashboardCard key={card.header} card={card} />
+        ))}
+      </div>
+      <hr className="opacity-20"></hr>
+      <div className="m-5">
+        <h2>NEXT5TR</h2>
+        {toReplaceTop5.map((product: Product) => (
+          <ProductItem key={product.id} product={product} />
+        ))}
+      </div>
+    </div>
   );
 }

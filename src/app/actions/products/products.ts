@@ -30,6 +30,7 @@ export async function getProductsByTypesFilter(
         in: types.map((productType) => productType.id),
       },
     },
+    orderBy: { renewalDate: "asc" },
   });
 
   return products;
