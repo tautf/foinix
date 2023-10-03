@@ -84,20 +84,24 @@ export default async function Home() {
   ];
 
   return (
-    <div className="mx-auto m-10 mt-20 max-w-screen-lg">
-      <div className="flex justify-between">
-        <p className="-ml-5 text-6xl font-extrabold text-indigo-700">
+    <div className="mx-auto m-10 xl:mt-32 max-w-screen-lg">
+      <div className="flex justify-between mx-2">
+        <p className="lg:text-6xl text-5xl font-extrabold text-indigo-700">
           Dashboard
         </p>
         <Link href="/products">
-          <Button className="px-10 mt-2">Products</Button>
+          <Button className="lg:px-10 px-8 mt-2">Products</Button>
         </Link>
       </div>
 
       <br />
-      <div className={`flex justify-between flex-cols-${cards.length}`}>
-        {cards.map((card) => (
-          <DashboardCard key={card.header} card={card} />
+      <div className={`flex justify-between lg:flex-cols-5 flex-cols-3`}>
+        {cards.map((card, i) => (
+          <DashboardCard
+            key={card.header}
+            card={card}
+            className={`${i >= 3 && "hidden lg:block"}`}
+          />
         ))}
       </div>
       <hr className="opacity-20"></hr>
