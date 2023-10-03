@@ -84,7 +84,7 @@ export default async function Home() {
   ];
 
   return (
-    <div className="mx-auto m-10 max-w-screen-lg">
+    <div className="mx-auto m-10 mt-20 max-w-screen-lg">
       <div className="flex justify-between">
         <p className="-ml-5 text-6xl font-extrabold text-indigo-700">
           Dashboard
