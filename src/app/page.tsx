@@ -85,17 +85,17 @@ export default async function Home() {
 
   return (
     <div className="mx-auto m-10 xl:mt-32 max-w-screen-lg">
-      <div className="flex justify-between mx-2">
+      <div className="flex justify-between mx-5">
         <p className="lg:text-6xl text-4xl font-extrabold text-indigo-700">
           Dashboard
         </p>
         <Link href="/products">
-          <Button className="lg:px-10 px-6 mt-2">Products</Button>
+          <Button className="lg:px-10 px-6 lg:mt-2">Products</Button>
         </Link>
       </div>
 
       <br />
-      <div className={`flex justify-between lg:flex-cols-5 flex-cols-3`}>
+      <div className={`flex justify-between mx-2 lg:flex-cols-5 flex-cols-3`}>
         {cards.map((card, i) => (
           <DashboardCard
             key={card.header}

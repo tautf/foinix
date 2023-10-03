@@ -1,9 +1,10 @@
 import React from "react";
-import Link from "next/link";
 
 import { Card, CardHeader, CardBody, CardFooter } from "@nextui-org/card";
 import { Divider } from "@nextui-org/divider";
 import { Button } from "@nextui-org/button";
+
+import BackHomeButton from "../components/BackHomeButton";
 
 import {
   ServerStackIcon,
@@ -16,16 +17,8 @@ import { getProductById } from "@/app/actions/products/products";
 export default async function Product(params: { params: { id: string } }) {
   const product = await getProductById(Number(params.params["id"]));
   return (
-    <div className="md:container mx-auto px-40 py-40">
-      <Link href="/">
-        <Button
-          className="bg-indigo-700 text-black float-right px-12 py-2 my-10"
-          startContent={<HomeIcon className="w-5 h-5" />}
-        >
-          Back home
-        </Button>
-      </Link>
-
+    <div className="mx-auto m-10 xl:mt-32 max-w-screen-lg">
+      <BackHomeButton />
       <Card className="w-full">
         <CardHeader className="flex gap-3">
           <ServerStackIcon className="w-7 h-7" />
