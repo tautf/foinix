@@ -86,11 +86,11 @@ export default async function Home() {
   return (
     <div className="mx-auto m-10 xl:mt-32 max-w-screen-lg">
       <div className="flex justify-between mx-2">
-        <p className="lg:text-6xl text-5xl font-extrabold text-indigo-700">
+        <p className="lg:text-6xl text-4xl font-extrabold text-indigo-700">
           Dashboard
         </p>
         <Link href="/products">
-          <Button className="lg:px-10 px-8 mt-2">Products</Button>
+          <Button className="lg:px-10 px-6 mt-2">Products</Button>
         </Link>
       </div>
 
