@@ -47,7 +47,6 @@ export default function AddModal({
               type="text"
               name="product-name"
               label="Product name"
-              defaultValue="HOTSV001"
               minLength={5}
             />
             <Input
@@ -78,7 +77,7 @@ export default function AddModal({
             <Select
               isRequired
               name="product-type"
-              label="Select produdct type"
+              label="Select product type"
               className="w-1/2"
             >
               {productTypes.map((type) => (

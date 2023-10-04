@@ -32,7 +32,7 @@ export default function RenewModal({
     <Modal isOpen={showModal} onClose={closeModal} backdrop="blur" size="2xl">
       <ModalContent>
         <ModalHeader className="flex flex-col gap-1 text-indigo-300">
-          Please choose the new renewal date
+          Please choose a new renewal date
         </ModalHeader>
         <ModalBody>
           <form action={renewProduct}>
