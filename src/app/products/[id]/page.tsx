@@ -2,26 +2,55 @@ import React from "react";
 
 import { Card, CardHeader, CardBody, CardFooter } from "@nextui-org/card";
 import { Divider } from "@nextui-org/divider";
-import { Button } from "@nextui-org/button";
+import dayjs from "dayjs";
 
 import BackHomeButton from "../components/BackHomeButton";
 
 import {
-  ServerStackIcon,
-  HomeIcon,
   ArrowPathIcon,
+  ComputerDesktopIcon,
+  CommandLineIcon,
+  ServerIcon,
+  DevicePhoneMobileIcon,
+  CpuChipIcon,
+  WrenchIcon,
 } from "@heroicons/react/24/outline";
 
 import { getProductById } from "@/app/actions/products/products";
+import ActionButtons from "./components/ActionButtons";
+import { getProductTypes } from "@/app/actions/product-type/product-types";
+
+export const revalidate = 3600;
 
 export default async function Product(params: { params: { id: string } }) {
+  const productTypes = await getProductTypes();
   const product = await getProductById(Number(params.params["id"]));
+
+  const getTypeIcon = (typeId: number) => {
+    switch (typeId) {
+      case 1:
+        return <ComputerDesktopIcon className="w-7 h-7" />;
+      case 2:
+        return <CommandLineIcon className="w-7 h-7" />;
+      case 3:
+        return <ServerIcon className="w-7 h-7" />;
+      case 4:
+        return <ArrowPathIcon className="w-7 h-7" />;
+      case 5:
+        return <DevicePhoneMobileIcon className="w-7 h-7" />;
+      case 6:
+        return <CpuChipIcon className="w-7 h-7" />;
+      default:
+        return <WrenchIcon className="w-7 h-7" />;
+    }
+  };
+
   return (
     <div className="mx-auto m-10 xl:mt-32 max-w-screen-lg">
       <BackHomeButton />
       <Card className="w-full">
         <CardHeader className="flex gap-3">
-          <ServerStackIcon className="w-7 h-7" />
+          {getTypeIcon(product.productTypeId)}
           <div className="flex flex-col">
             <p className="text-lg font-bold text-indigo-300">{product.name}</p>
             {product.description && (
@@ -33,16 +62,25 @@ export default async function Product(params: { params: { id: string } }) {
         </CardHeader>
         <Divider />
         <CardBody>
-          <p>Make beautiful websites regardless of your design experience.</p>
+          {product.replacedById && (
+            <p className="text-red-500">
+              Product got replaced by Id {product.replacedById}
+            </p>
+          )}
+          <h2>
+            To replace on {dayjs(product.renewalDate).format("DD.MM.YYYY")}
+          </h2>
+          <hr />
+          <p>
+            Created at: {dayjs(product.createdAt).format("DD.MM.YYYY HH:mm")}
+          </p>
+          <p>
+            Updated at: {dayjs(product.updatedAt).format("DD.MM.YYYY HH:mm")}
+          </p>
         </CardBody>
         <Divider />
         <CardFooter>
-          <Button
-            className="bg-indigo-300 text-black px-12"
-            startContent={<ArrowPathIcon className="w-5 h-5" />}
-          >
-            Update
-          </Button>
+          <ActionButtons productTypes={productTypes} currentProduct={product} />
         </CardFooter>
       </Card>
     </div>

@@ -20,6 +20,8 @@ export type ICard = {
   text: string;
 };
 
+export const revalidate = 3600;
+
 export default async function Home() {
   const toReplaceTop5 = await getToReplaceTop5();
   const { products30, sum30 } = await getToReplaceAndInvestIn30Days();

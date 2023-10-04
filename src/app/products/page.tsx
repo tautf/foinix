@@ -16,6 +16,8 @@ import BackHomeButton from "./components/BackHomeButton";
 // Types
 import type { Product } from "@prisma/client";
 
+export const revalidate = 3600;
+
 export default async function Products({
   searchParams,
 }: {

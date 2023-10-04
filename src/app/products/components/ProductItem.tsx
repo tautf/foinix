@@ -3,10 +3,19 @@ import Link from "next/link";
 
 import { Product } from "@prisma/client";
 import { Card, CardHeader } from "@nextui-org/card";
-import { ServerIcon } from "@heroicons/react/24/outline";
+import {
+  ArrowPathIcon,
+  CommandLineIcon,
+  CpuChipIcon,
+  ComputerDesktopIcon,
+  DevicePhoneMobileIcon,
+  ServerIcon,
+  WrenchIcon,
+} from "@heroicons/react/24/outline";
 
 import sharedStyles from "../../shared.module.css";
 import styles from "./ProductItem.module.css";
+import { Server } from "http";
 
 export default function ProductItem({ product }: { product: Product }) {
   const getTTL = (date: Date) => {
@@ -16,29 +25,58 @@ export default function ProductItem({ product }: { product: Product }) {
     return ttlInDays;
   };
 
+  const getTypeIcon = (typeId: number) => {
+    switch (typeId) {
+      case 1:
+        return <ComputerDesktopIcon className="w-5 h-5" />;
+      case 2:
+        return <CommandLineIcon className="w-5 h-5" />;
+      case 3:
+        return <ServerIcon className="w-5 h-5" />;
+      case 4:
+        return <ArrowPathIcon className="w-5 h-5" />;
+      case 5:
+        return <DevicePhoneMobileIcon className="w-5 h-5" />;
+      case 6:
+        return <CpuChipIcon className="w-5 h-5" />;
+      default:
+        return <WrenchIcon className="w-5 h-5" />;
+    }
+  };
+
   return (
     <Link href={`/products/${product.id}`}>
       <Card
         className={`w-full my-3 cursor-pointer bg-gradient-to-r hover:from-indigo-900 hover:to-indigo-950 transition ease-in ${
           styles.item
         } ${
-          (getTTL(product.renewalDate) < 0 &&
+          (!product.replacedById &&
+            getTTL(product.renewalDate) < 0 &&
             `${sharedStyles.alerts_border}`) ||
-          (getTTL(product.renewalDate) < 30 &&
+          (!product.replacedById &&
+            getTTL(product.renewalDate) < 30 &&
             "border-2 border-red-500 border-opacity-50") ||
-          (getTTL(product.renewalDate) < 90 &&
-            "border-2 border-amber-500 border-opacity-50")
-        }`}
+          (!product.replacedById &&
+            getTTL(product.renewalDate) < 90 &&
+            "border-2 border-amber-500 border-opacity-50") ||
+          (product.replacedById && "opacity-50")
+        } `}
       >
         <div className="flex justify-between">
           <CardHeader className="flex gap-3">
-            <ServerIcon className="w-5 h-5" />
+            {getTypeIcon(product.productTypeId)}
             {product.name}
             <p
               className={`absolute top-3 right-4 ${
-                (getTTL(product.renewalDate) < 0 && "font-bold text-red-500") ||
-                (getTTL(product.renewalDate) < 30 && "text-red-500") ||
-                (getTTL(product.renewalDate) < 90 && "text-amber-500")
+                (!product.replacedById &&
+                  getTTL(product.renewalDate) < 0 &&
+                  "font-bold text-red-500") ||
+                (!product.replacedById &&
+                  getTTL(product.renewalDate) < 30 &&
+                  "text-red-500") ||
+                (!product.replacedById &&
+                  getTTL(product.renewalDate) < 90 &&
+                  "text-amber-500")
               }`}
             >
               TTL: {getTTL(product.renewalDate)}
