@@ -91,7 +91,7 @@ export default async function Home() {
         <p className="lg:text-6xl text-4xl font-extrabold text-indigo-700">
           Dashboard
         </p>
-        <Link href="/products">
+        <Link href="/products?hideReplaced=true">
           <Button className="lg:px-10 px-6 lg:mt-2">Products</Button>
         </Link>
       </div>

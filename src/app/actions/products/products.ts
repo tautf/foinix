@@ -64,6 +64,7 @@ export const addProduct = cache(async (form: FormData): Promise<number> => {
     const newProduct = await prisma.product.create({
       data: product,
     });
+    revalidatePath("/");
     revalidatePath("/products");
     return newProduct.id;
   } catch (err) {
@@ -82,6 +83,7 @@ export const updateProduct = cache(
       where: { id: productToUpdate.id },
       data: productToUpdate,
     });
+    revalidatePath("/");
     revalidatePath("/products");
     revalidatePath(`/products/${productToUpdate.id}`);
     return;
@@ -96,6 +98,9 @@ export const replaceProduct = cache(
         replacedById: newProductId,
       },
     });
+    revalidatePath("/");
+    revalidatePath("/products");
+    revalidatePath(`/products/${id}`);
   }
 );
 
@@ -184,7 +189,7 @@ export const getToReplaceAndInvestIn90Days = cache(
   }
 );
 
-export const createProductObject = (formData: FormData): any => {
+const createProductObject = (formData: FormData): any => {
   const productSchema = z.object({
     name: z
       .string()

@@ -33,11 +33,16 @@ export default async function Products({
         (type) => params.indexOf(type.name.toLowerCase()) !== -1
       )
     );
+    if (searchParams["hideReplaced"] === "true") {
+      products = products.filter((product) => !product.replacedById);
+    }
+  } else if (searchParams["hideReplaced"] === "true") {
+    products = products.filter((product) => !product.replacedById);
   }
 
   return (
     <div className="mx-auto m-10 mt-20 max-w-screen-lg">
-      <div className="flex justify-between mx-5 mb-20 items-center">
+      <div className="flex justify-between mx-5 sm:mb-20 items-center">
         <h1 className="text-5xl text-indigo-700 font-bold">Products</h1>
         <div className="flex items-center space-x-2">
           <BackHomeButton />
