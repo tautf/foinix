@@ -1,36 +1,59 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# Foinix
 
-## Getting Started
+`Φοίνιξ` in greek. The phoenix is an immortal bird that cyclically regenerates or is otherwise born again.
 
-First, run the development server:
+![Foinix Presentation Mockup](https://github.com/tautf/foinix/assets/18403881/6db7ee5f-6b5a-4fe7-a6c9-c09a5f7fd121)
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+## For what?
+
+As IT-Department in the year of 2023 there is not even enough time to drink a coffee in peace anymore. (If you have self-hosted infrastructure atleast)
+
+One of our biggest problems was, as there was not enough manpower, to keep track of our products lifetimes.
+
+## The Problem
+
+You buy a new server, switch, laptop.
+
+Configure it, put it into production or give to your employees and quickly loose track of the status. The products get older, the warranty is over and certainly they break.
+
+Of course, without any warranty or service subscription you will not get any repair service for free. The costs of repairing are higher than replacing the product.
+
+## The solution (?)
+
+Is `Foinix` the solution? No!
+
+It's a first step to keep track of the products lifetime. Check it once daily or weekly and you know exactly how much you need to invest soon and what to replace next.
+
+Like this you will, as long as you don't ingore it, not forget any of your products during your upcoming renewal cycle.
+
+## Usage
+
+`Foinix` was made for and tested with, the use with `Vercel` as hosting provider and `Supabase` as database. If you have trouble using another provider, please open an issue.
+
+Clone the repository locally.
+
+```
+pnpm install
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Create .env
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+```
+cp .env.example .env
+```
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+Adjust `DATABASE_URL` to your database. Make sure to use `pg_bouncer` and connection pooling when using `Supabase`.
 
-## Learn More
+Adjust `DATABASE_DIRECT_URL` to the direct database access connection string.
 
-To learn more about Next.js, take a look at the following resources:
+Deployment example with `Vercel CLI`
 
--   [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
--   [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+```
+vercel --env DATABASE_URL=your-url-to-postgres
+```
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+## License
 
-## Deploy on Vercel
+This product is licensed under CC BY-NC-SA 4.0.
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+For commercial usage, please contact me via e-mail: flo@tautf.de
