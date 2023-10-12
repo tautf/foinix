@@ -12,6 +12,7 @@ model Product {
   id            Int         @id @default(autoincrement())
   name          String
   description   String?
+  cmdb_link   String?
   price         Float
   renewalDate   DateTime
   createdAt     DateTime    @default(now())

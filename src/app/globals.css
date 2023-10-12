@@ -3,11 +3,11 @@
 @tailwind utilities;
 
 :root {
-  --background: white;
-  --foreground: black;
+    --background: white;
+    --foreground: black;
 }
 
-[data-theme="dark"] {
-  --background: black;
-  --foreground: white;
+[data-theme='dark'] {
+    --background: black;
+    --foreground: white;
 }

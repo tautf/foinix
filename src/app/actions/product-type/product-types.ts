@@ -1,19 +1,19 @@
-"use server";
+'use server';
 
-import prisma from "@/app/shared/prisma";
-import { cache } from "react";
+import prisma from '@/app/shared/prisma';
+import { cache } from 'react';
 
-import type { ProductType } from "@prisma/client";
+import type { ProductType } from '@prisma/client';
 
 /**
  * Retrieves all product types from the database
  * @returns All product types in the database
  */
 export const getProductTypes = cache(async (): Promise<ProductType[]> => {
-  const types = await prisma.productType.findMany({
-    orderBy: { id: "asc" },
-  });
-  return types;
+    const types = await prisma.productType.findMany({
+        orderBy: { id: 'asc' },
+    });
+    return types;
 });
 
 /**
@@ -22,8 +22,8 @@ export const getProductTypes = cache(async (): Promise<ProductType[]> => {
  * @returns Product type with the given id
  */
 export const getProductTypeById = cache(
-  async (id: number): Promise<ProductType> => {
-    const type = await prisma.productType.findUnique({ where: { id } });
-    return type!;
-  }
+    async (id: number): Promise<ProductType> => {
+        const type = await prisma.productType.findUnique({ where: { id } });
+        return type!;
+    },
 );

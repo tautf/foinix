@@ -1,6 +1,6 @@
-import NextAuth from "next-auth";
+import NextAuth from 'next-auth';
 
 export const authOptions = {
-  // Configure one or more authentication providers
-  providers: [],
+    // Configure one or more authentication providers
+    providers: [],
 };

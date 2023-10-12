@@ -1,28 +1,28 @@
-import "./globals.css";
-import type { Metadata } from "next";
-import { Inter } from "next/font/google";
-import { Providers } from "./providers";
+import './globals.css';
+import type { Metadata } from 'next';
+import { Inter } from 'next/font/google';
+import { Providers } from './providers';
 
-const inter = Inter({ subsets: ["latin"] });
+const inter = Inter({ subsets: ['latin'] });
 
 export const metadata: Metadata = {
-  title: "Foinix",
+    title: 'Foinix',
 };
 
 export default function RootLayout({
-  children,
+    children,
 }: {
-  children: React.ReactNode;
+    children: React.ReactNode;
 }) {
-  return (
-    <html
-      suppressHydrationWarning
-      lang="en"
-      className="dark text-foreground bg-background"
-    >
-      <body className={inter.className}>
-        <Providers>{children}</Providers>
-      </body>
-    </html>
-  );
+    return (
+        <html
+            suppressHydrationWarning
+            lang="en"
+            className="dark text-foreground bg-background"
+        >
+            <body className={inter.className}>
+                <Providers>{children}</Providers>
+            </body>
+        </html>
+    );
 }
