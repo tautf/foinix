@@ -2,7 +2,7 @@
 
 `Φοίνιξ` in greek. The phoenix is an immortal bird that cyclically regenerates or is otherwise born again.
 
-![Foinix Presentation Mockup](https://github.com/tautf/foinix/assets/18403881/6db7ee5f-6b5a-4fe7-a6c9-c09a5f7fd121)
+![Foinix Presentation Mockup](https://github.com/tautf/foinix/assets/18403881/a0fef6ff-3cf7-427e-99b9-88f5eac7d275)
 
 ## For what?
 
