@@ -54,6 +54,4 @@ vercel --env DATABASE_URL=your-url-to-postgres
 
 ## License
 
-This product is licensed under CC BY-NC-SA 4.0.
-
-For commercial usage, please contact me via e-mail: flo@tautf.de
+This product is licensed under MIT.
