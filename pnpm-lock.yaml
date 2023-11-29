@@ -74,10 +74,10 @@ devDependencies:
     specifier: ^13.11.7
     version: 13.11.7
   eslint:
-    specifier: 8.50.0
+    specifier: ^8.50.0
     version: 8.50.0
   eslint-config-next:
-    specifier: 13.5.2
+    specifier: ^13.5.2
     version: 13.5.2(eslint@8.50.0)(typescript@5.2.2)
   husky:
     specifier: ^8.0.3
@@ -89,7 +89,7 @@ devDependencies:
     specifier: ^5.6.0
     version: 5.6.0
   typescript:
-    specifier: 5.2.2
+    specifier: ^5.2.2
     version: 5.2.2
 
 packages:
