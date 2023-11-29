@@ -13,4 +13,5 @@ jobs:
                         password: ${{ secrets.GITHUB_TOKEN }}
                         run: |
                             docker build . --tag ghcr.io/tautf/foinix:latest
+                            docker run ghcr.io/tautf/foinix:latest
                             docker push ghcr.io/tautf/foinix:latest
