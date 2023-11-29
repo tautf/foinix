@@ -13,7 +13,7 @@ export default function BackHomeButton() {
                 variant="shadow"
                 startContent={<HomeIcon className="w-5 h-5" />}
             >
-                {window.innerWidth > 1024 ? 'Home' : ''}
+                {window?.innerWidth > 1024 ? 'Home' : ''}
             </Button>
         </Link>
     );

@@ -48,7 +48,7 @@ export default function AddProduct({ productTypes }: Props) {
                 variant="shadow"
                 startContent={<PlusCircleIcon className="h-5 w-5" />}
             >
-                {window.innerWidth > 1024 ? 'Add' : ''}
+                {window?.innerWidth > 1024 ? 'Add' : ''}
             </Button>
             <AddModal
                 showModal={showModel}
