@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import { Button } from '@nextui-org/button';
 import { PlusCircleIcon } from '@heroicons/react/24/outline';
@@ -17,6 +17,11 @@ type Props = {
 
 export default function AddProduct({ productTypes }: Props) {
     const [showModel, setShowModel] = useState(false);
+    const [buttonText, setButtonText] = useState('Add');
+
+    useEffect(() => {
+        window.innerWidth > 1024 ? setButtonText('Add') : setButtonText('');
+    }, []);
 
     const toggleShowModel = () => {
         setShowModel(!showModel);
@@ -48,7 +53,7 @@ export default function AddProduct({ productTypes }: Props) {
                 variant="shadow"
                 startContent={<PlusCircleIcon className="h-5 w-5" />}
             >
-                {window?.innerWidth > 1024 ? 'Add' : ''}
+                {buttonText}
             </Button>
             <AddModal
                 showModal={showModel}
