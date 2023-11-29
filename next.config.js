@@ -1,6 +1,6 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-    standalone: true,
+    output: 'standalone',
     experimental: {
         serverActions: true,
     },

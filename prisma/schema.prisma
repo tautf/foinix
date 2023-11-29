@@ -1,6 +1,5 @@
 datasource db {
   url      = env("DATABASE_URL")
-  directUrl= env("DATABASE_DIRECT_URL")
   provider = "postgresql"
 }
 
