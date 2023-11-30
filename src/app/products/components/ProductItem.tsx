@@ -15,7 +15,6 @@ import {
 
 import sharedStyles from '../../shared.module.css';
 import styles from './ProductItem.module.css';
-import { Server } from 'http';
 
 export default function ProductItem({ product }: { product: Product }) {
     const getTTL = (date: Date) => {
