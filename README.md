@@ -28,29 +28,22 @@ Like this you will, as long as you don't ingore it, not forget any of your produ
 
 ## Usage
 
-`Foinix` was made for and tested with, the use with `Vercel` as hosting provider and `Supabase` as database. If you have trouble using another provider, please open an issue.
+`Foinix` was made for and tested with, the use with `Docker` and `Postgresql` as database.
 
 Clone the repository locally.
 
-```
-pnpm install
-```
-
-Create .env
-
-```
-cp .env.example .env
+```bash
+docker pull ghcr.io/tautf/foinix
 ```
 
-Adjust `DATABASE_URL` to your database. Make sure to use `pg_bouncer` and connection pooling when using `Supabase`.
-
-Adjust `DATABASE_DIRECT_URL` to the direct database access connection string.
-
-Deployment example with `Vercel CLI`
-
+Run the container
+```bash
+docker run -d -p 3000:3000 -e DATABASE_URL="postgres://postgres:postgres@host.docker.internal:5432/postgres" --name=foinix foinix
 ```
-vercel --env DATABASE_URL=your-url-to-postgres
-```
+
+Adjust `DATABASE_URL` to your database. Make sure to use `pg_bouncer` and connection pooling when using providers like `Supabase`.
+
+In a future version i will provide a `Compose` file that handles the database as well.
 
 ## License
 
