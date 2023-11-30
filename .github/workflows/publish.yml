@@ -1,9 +1,9 @@
 name: publish
 on: [push]
-env:
-  DATABASE_URL: ${{ secrets.DATABASE_URL }}
 jobs:
   build:
+    env:
+      DATABASE_URL: ${{ vars.DATABASE_URL }}
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
