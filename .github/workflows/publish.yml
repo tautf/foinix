@@ -13,7 +13,7 @@ jobs:
                         password: ${{ secrets.GITHUB_TOKEN }}
                      - name: Build and push
                        env:
-                        DATABASE_URL: ${{ secrets.DATABASE_URL }}
+                        DATABASE_URL: ${{ env.DATABASE_URL }}
                        run: |
                             docker build . --tag ghcr.io/tautf/foinix:latest
                             docker run ghcr.io/tautf/foinix:latest
