@@ -15,6 +15,7 @@ import BackHomeButton from './components/BackHomeButton';
 
 // Types
 import type { Product } from '@prisma/client';
+import { Input } from '@nextui-org/react';
 
 export const revalidate = 3600;
 
@@ -33,12 +34,24 @@ export default async function Products({
                 (type) => params.indexOf(type.name.toLowerCase()) !== -1,
             ),
         );
-        if (searchParams['hideReplaced'] === 'true') {
-            products = products.filter((product) => !product.replacedById);
-        }
-    } else if (searchParams['hideReplaced'] === 'true') {
+    }
+    if (searchParams['hideReplaced'] === 'true') {
         products = products.filter((product) => !product.replacedById);
     }
+    if (searchParams['filter']) {
+        const params = String(searchParams['filter']).toLowerCase();
+        products = products.filter((product) =>
+            product.name.toLowerCase().includes(params),
+        );
+    }
+
+    const onFilterProducts = (value: string) => {
+        if (value) {
+            products = products.filter((product) =>
+                product.name.toLowerCase().includes(value.toLowerCase()),
+            );
+        }
+    };
 
     return (
         <div className="mx-auto m-10 mt-20 max-w-screen-lg">

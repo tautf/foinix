@@ -40,7 +40,6 @@ export default function AddModal({
     const validateCmdbLink = () => {
         const link = document.getElementById('cmdb') as HTMLInputElement;
         if (link?.value) {
-            console.log(link.value);
             setCmdbLinkValid(isUrl(link.value));
         }
     };
@@ -63,7 +62,7 @@ export default function AddModal({
                             type="text"
                             name="product-name"
                             label="Product name"
-                            minLength={5}
+                            minLength={2}
                         />
                         <Input
                             className="my-5"

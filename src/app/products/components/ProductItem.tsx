@@ -46,7 +46,7 @@ export default function ProductItem({ product }: { product: Product }) {
     return (
         <Link href={`/products/${product.id}`}>
             <Card
-                className={`w-full my-3 cursor-pointer bg-gradient-to-r hover:from-indigo-900 hover:to-indigo-950 transition ease-in ${
+                className={`w-full my-3 cursor-pointer bg-gradient-to-r transition ease-in ${
                     styles.item
                 } ${
                     (!product.replacedById &&

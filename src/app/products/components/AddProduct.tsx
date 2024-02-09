@@ -49,7 +49,7 @@ export default function AddProduct({ productTypes }: Props) {
         <>
             <Button
                 onClick={toggleShowModel}
-                className="bg-gradient-to-r from-indigo-500 to-indigo-700 text-black lg:px-12 px-6 transition ease-in hover:scale-110"
+                className="bg-gradient-to-r from-indigo-500 to-indigo-700 text-black lg:px-12 px-6 transition ease-in hover:scale-105"
                 variant="shadow"
                 startContent={<PlusCircleIcon className="h-5 w-5" />}
             >

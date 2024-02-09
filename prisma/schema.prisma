@@ -18,7 +18,9 @@ model Product {
   updatedAt     DateTime    @updatedAt
   productType   ProductType @relation(fields: [productTypeId], references: [id])
   productTypeId Int
+  renewedAt     DateTime?
   replacedById  Int?
+  replacedAt    DateTime?
 }
 
 model ProductType {

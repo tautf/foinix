@@ -3,13 +3,14 @@
 import React, { useState } from 'react';
 
 import { Button } from '@nextui-org/button';
-import { ArrowPathIcon, TrashIcon } from '@heroicons/react/24/outline';
+import { ArrowPathIcon, PencilIcon, TrashIcon } from '@heroicons/react/24/outline';
 
 import RenewModal from './RenewModal';
 import AddModal from '../../components/AddModal';
 import type { Product, ProductType } from '@prisma/client';
 import {
     addProduct,
+    deleteProduct,
     replaceProduct,
     updateProduct,
 } from '@/app/actions/products/products';
@@ -24,6 +25,7 @@ export default function ActionButtons({ currentProduct, productTypes }: Props) {
     const router = useRouter();
     const [showRenewModal, setShowRenewModal] = useState(false);
     const [showReplaceModal, setShowReplaceModal] = useState(false);
+    const [showEditModal, setShowEditModal] = useState(false);
 
     const toggleRenewModal = () => {
         setShowRenewModal(!showRenewModal);
@@ -31,6 +33,15 @@ export default function ActionButtons({ currentProduct, productTypes }: Props) {
 
     const toggleReplaceModal = () => {
         setShowReplaceModal(!showReplaceModal);
+    };
+
+    const toggleEditModal = () => {
+        setShowReplaceModal(!showEditModal);
+    };
+
+    const onRemoveClick = async () => {
+        await deleteProduct(currentProduct.id);
+        router.replace('/products');
     };
 
     const handleRenew = async (form: FormData) => {
@@ -62,7 +73,15 @@ export default function ActionButtons({ currentProduct, productTypes }: Props) {
     return (
         <div className="flex gap-2">
             <Button
-                className="bg-indigo-300 text-black px-12"
+                className="bg-indigo-300 text-black px-12 transition ease-in hover:scale-105"
+                variant="shadow"
+                onClick={toggleEditModal}
+                startContent={<PencilIcon className="w-5 h-5" />}
+            >
+                Edit
+            </Button>
+            <Button
+                className="bg-indigo-300 text-black px-12 transition ease-in hover:scale-105"
                 variant="shadow"
                 onClick={toggleRenewModal}
                 startContent={<ArrowPathIcon className="w-5 h-5" />}
@@ -76,12 +95,20 @@ export default function ActionButtons({ currentProduct, productTypes }: Props) {
                 closeModal={toggleRenewModal}
             />
             <Button
-                className="bg-indigo-300 text-black px-12"
+                className="bg-indigo-300 text-black px-12 transition ease-in hover:scale-105"
                 variant="shadow"
                 onClick={toggleReplaceModal}
-                startContent={<TrashIcon className="w-5 h-5" />}
+                startContent={<ArrowPathIcon className="w-5 h-5" />}
             >
                 Replace
+            </Button>
+            <Button
+                className="bg-indigo-300 text-black px-12 transition ease-in hover:scale-105"
+                variant="shadow"
+                onClick={onRemoveClick}
+                startContent={<TrashIcon className="w-5 h-5" />}
+            >
+                Delete
             </Button>
             <AddModal
                 addProduct={handleReplace}
