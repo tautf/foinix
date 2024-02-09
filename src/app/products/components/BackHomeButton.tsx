@@ -15,7 +15,7 @@ export default function BackHomeButton() {
     return (
         <Link href="/">
             <Button
-                className="bg-gradient-to-r from-indigo-500 to-indigo-700 text-black float-right lg:px-12 px-6 py-2 my-10"
+                className="bg-gradient-to-r from-indigo-500 to-indigo-700 text-black float-right lg:px-12 px-6 py-2 my-10 transition ease-in hover:scale-105"
                 variant="shadow"
                 startContent={<HomeIcon className="w-5 h-5" />}
             >

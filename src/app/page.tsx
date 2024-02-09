@@ -40,7 +40,7 @@ export default async function Home() {
             text: String(toRenew),
         },
         {
-            header: 'TR30',
+            header: 'TD30',
             subHeader: 'To replace in the next 30 days',
             bgColor:
                 products30.length < 5
@@ -91,9 +91,18 @@ export default async function Home() {
                 <p className="lg:text-6xl text-4xl font-extrabold text-indigo-700">
                     Dashboard
                 </p>
-                <Link href="/products?hideReplaced=true">
-                    <Button className="lg:px-10 px-6 lg:mt-2">Products</Button>
-                </Link>
+                <div className="flex gap-2">
+                    <Link href="/controlling-dashboard">
+                        <Button className="lg:px-10 px-6 lg:mt-2 transition ease-in hover:scale-105">
+                            Controlling Dashboard
+                        </Button>
+                    </Link>
+                    <Link href="/products?hideReplaced=true">
+                        <Button className="lg:px-10 px-6 lg:mt-2 transition ease-in hover:scale-105">
+                            Products
+                        </Button>
+                    </Link>
+                </div>
             </div>
 
             <br />

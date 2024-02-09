@@ -82,6 +82,7 @@ export const addProduct = cache(async (form: FormData): Promise<number> => {
 export const updateProduct = cache(
     async (productToUpdate: any): Promise<void> => {
         productToUpdate.updatedAt = dayjs().toDate();
+        productToUpdate.renewedAt = dayjs().toDate();
         await prisma.product.update({
             where: { id: productToUpdate.id },
             data: productToUpdate,
@@ -99,6 +100,7 @@ export const replaceProduct = cache(
             where: { id },
             data: {
                 replacedById: newProductId,
+                replacedAt: dayjs().toDate(),
             },
         });
         revalidatePath('/');
@@ -106,6 +108,12 @@ export const replaceProduct = cache(
         revalidatePath(`/products/${id}`);
     },
 );
+
+export const deleteProduct = cache(async (id: number): Promise<void> => {
+    await prisma.product.delete({ where: { id } });
+    revalidatePath('/');
+    revalidatePath('/products');
+});
 
 /**
  * Retrieves the top 5 products that need to be replaced
@@ -192,6 +200,187 @@ export const getToReplaceAndInvestIn90Days = cache(
         return {
             products90: products,
             sum90: products.reduce((acc, product) => acc + product.price, 0),
+        };
+    },
+);
+
+export const getToReplaceAndInvestInCurrentQuarter = cache(
+    async (): Promise<{
+        productsCurrentQuarter: Product[];
+        sumCurrentQuarter: number;
+    }> => {
+        const startOfYear =
+            dayjs().month() >= 9
+                ? dayjs().month(9).startOf('month')
+                : dayjs().subtract(1, 'year').month(9).startOf('month');
+        const endOfYear =
+            dayjs().month() >= 9
+                ? dayjs().add(1, 'year').month(8).endOf('month')
+                : dayjs().month(8).endOf('month');
+
+        const products = await prisma.product.findMany({
+            where: {
+                replacedById: {
+                    not: null,
+                },
+                replacedAt: {
+                    gte: startOfYear.toDate(),
+                    lte: endOfYear.toDate(),
+                },
+            },
+        });
+
+        return {
+            productsCurrentQuarter: products,
+            sumCurrentQuarter: products.reduce(
+                (acc, product) => acc + product.price,
+                0,
+            ),
+        };
+    },
+);
+
+export const getToReplaceAndInvestInNextQuarter = cache(
+    async (): Promise<{
+        productsNextQuarter: Product[];
+        sumNextQuarter: number;
+    }> => {
+        const products = await prisma.product.findMany({
+            where: {
+                renewalDate: {
+                    gte: new Date(
+                        new Date().getFullYear(),
+                        new Date().getMonth() + 3,
+                        new Date().getDate(),
+                    ),
+                    lte: new Date(
+                        new Date().getFullYear(),
+                        new Date().getMonth() + 6,
+                        new Date().getDate(),
+                    ),
+                },
+                replacedById: null,
+            },
+        });
+
+        return {
+            productsNextQuarter: products,
+            sumNextQuarter: products.reduce(
+                (acc, product) => acc + product.price,
+                0,
+            ),
+        };
+    },
+);
+
+export const getToReplaceAndInvestInCurrentBusinessYear = cache(
+    async (): Promise<{
+        productsCurrentYear: Product[];
+        sumCurrentYear: number;
+    }> => {
+        const startOfYear =
+            dayjs().month() >= 9
+                ? dayjs().month(9).startOf('month')
+                : dayjs().subtract(1, 'year').month(9).startOf('month');
+        const endOfYear =
+            dayjs().month() >= 9
+                ? dayjs().add(1, 'year').month(8).endOf('month')
+                : dayjs().month(8).endOf('month');
+
+        const products = await prisma.product.findMany({
+            where: {
+                renewalDate: {
+                    gte: startOfYear.toDate(),
+                    lte: endOfYear.toDate(),
+                },
+                replacedById: null,
+            },
+        });
+
+        return {
+            productsCurrentYear: products,
+            sumCurrentYear: products.reduce(
+                (acc, product) => acc + product.price,
+                0,
+            ),
+        };
+    },
+);
+
+export const getToReplaceAndInvestInNextBusinessYear = cache(
+    async (): Promise<{
+        productsNextYear: Product[];
+        sumNextYear: number;
+    }> => {
+        const startOfNextYear =
+            dayjs().month() >= 9
+                ? dayjs().add(1, 'year').month(9).startOf('month')
+                : dayjs().month(9).startOf('month');
+        const endOfNextYear =
+            dayjs().month() >= 9
+                ? dayjs().add(2, 'year').month(8).endOf('month')
+                : dayjs().add(1, 'year').month(8).endOf('month');
+
+        const products = await prisma.product.findMany({
+            where: {
+                renewalDate: {
+                    gte: startOfNextYear.toDate(),
+                    lte: endOfNextYear.toDate(),
+                },
+                replacedById: null,
+            },
+        });
+
+        return {
+            productsNextYear: products,
+            sumNextYear: products.reduce(
+                (acc, product) => acc + product.price,
+                0,
+            ),
+        };
+    },
+);
+
+export const getReplacedProductsInCurrentBusinessYear = cache(
+    async (): Promise<{
+        replacedProductsCurrentYear: Product[];
+        sumReplacedCurrentYear: number;
+    }> => {
+        const startOfYear =
+            dayjs().month() >= 9
+                ? dayjs().month(9).startOf('month')
+                : dayjs().subtract(1, 'year').month(9).startOf('month');
+        const endOfYear =
+            dayjs().month() >= 9
+                ? dayjs().add(1, 'year').month(8).endOf('month')
+                : dayjs().month(8).endOf('month');
+
+        const products = await prisma.product.findMany({
+            where: {
+                replacedById: {
+                    not: null,
+                },
+                replacedAt: {
+                    gte: startOfYear.toDate(),
+                    lte: endOfYear.toDate(),
+                },
+                OR: [
+                    {
+                        renewedAt: {
+                            gte: startOfYear.toDate(),
+                            lte: endOfYear.toDate(),
+                        },
+                    },
+                ],
+            },
+        });
+
+        return {
+            replacedProductsCurrentYear: products,
+            sumReplacedCurrentYear: products.reduce(
+                (acc, product) => acc + product.price,
+                0,
+            ),
         };
     },
 );
